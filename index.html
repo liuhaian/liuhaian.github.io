@@ -27,7 +27,7 @@
 	      <el-col v-for="(blk, bidx) in grp.blocks" v-bind:key="blk.name" :xs="8" :sm="6" :md="4" :lg="3" :xl="1">
 	      	<div class="cbox" :style="{background:blk.color,color:blk.txtcolor}">{{blk.name}}</div>
 	      	<div><span :style="{color:blk.color}">bg:{{blk.color}}</span></div>
-	      	<div><span :style="{color:blk.txtcolor}">text:{{blk.txtcolor}}</span></div>
+	      	<div v-if="blk.txtcolor!=undefined"><span :style="{color:blk.txtcolor}">text:{{blk.txtcolor}}</span></div>
 	      </el-col>
 	    </el-row>
     </template>
@@ -37,27 +37,5 @@
   <script src="./js/vue.js"></script>
   <!-- import JavaScript -->
   <script src="./lib/elementui/index.js"></script>
-  <script>
-    new Vue({
-      el: '#app',
-      data: function() {
-        return { 
-          groups: [
-        	{title: 'Text and Group 1', 
-        		blocks : [{color:'#B11E31',name:'Christmas Red',txtcolor:'#ffcabb'},
-        			{color:'#166138',name:'Pine Green',txtcolor:'#e8ac30'},
-        			{color:'#F8AD1E',name:'Ripe Pumpkin',txtcolor:'#b32c18'},
-        			{color:'#062639',name:'Sailor Blue',txtcolor:'#c5d3c6'},
-        			{color:'#30BCC9',name:'Blue Curacao',txtcolor:'#edf5e8'},
-        			{color:'#EED6BB',name:'Creamy Latte',txtcolor:'#2f663f'},
-        			{color:'#C9D4C5',name:'Ash Grey',txtcolor:'#637359'},
-        			{color:'#FAF3E3',name:'Whitewashed Fence',txtcolor:'#e9384c'},
-        			{color:'#FADA80',name:'Golden Glow',txtcolor:'#ae7f0d'}
-        		]
-        	}
-          ]
-      }
-  	 }
-    })
-  </script>
+  <script src="./app.js"></script>
 </html>
