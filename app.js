@@ -25,6 +25,17 @@
               {color:'#a6a5c4',name:'藤鼠'},
               {color:'#dbd0e6',name:'白藤'}
             ]
+          },
+          {title: '春色组', 
+            blocks : [{color:'#96ce54',name:'豆青'},
+              {color:'#9ed048',name:'豆绿'},
+              {color:'#9ed900',name:'葱绿'},
+              {color:'#a3d900',name:'葱黄'},
+              {color:'#afdd22',name:'柳绿'},
+              {color:'#c9dd22',name:'柳黄'},
+              {color:'#bddd22',name:'嫩绿'},
+              {color:'#bce627',name:'松花'}
+            ]
           }
           ]
       }
