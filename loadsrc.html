@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>loadScript</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+  pre {
+    font-family: Consolas, &quot;Lucida Console&quot;, Menlo, Monaco, monospace; 
+    background-image: inherit; 
+    background-position: inherit; 
+    background-size: inherit; 
+    background-repeat: inherit; 
+    background-attachment: inherit; 
+    background-origin: inherit; 
+    background-clip: inherit; 
+    border-radius: 2px; 
+    border: 1px solid black;
+    color: rgb(153, 153, 153);
+  }
+  </style>
+</head>
+<body>
+<h2>前置条件：1.js</h2>
+<pre>const a1 = 1;</pre>
+
+<h2>2.js</h2>
+<pre>const a2 = 2;</pre>
+
+<h2>3.js</h2>
+<pre>const a3 = 3;</pre>
+
+<h2>依次打印a1, a2, a3的值</h2>
+
+<h2>版本1：按需加载js</h2>
+<pre>
+function loadScript(src, callback) {
+  let script = document.createElement(&#39;script&#39;);
+  script.src = src;
+
+  script.onload = () =&gt; callback(null, script);
+  script.onerror = () =&gt; callback(new Error(`Script load error for ${src}`));
+
+  document.head.append(script);
+}
+</pre>
+
+<p>调用</p>
+<pre>
+loadScript(&#39;1.js&#39;, step1);
+
+function step1(error, script) {
+  if (error) {
+    handleError(error);
+  } else {
+    // console.log(a1);
+    loadScript(&#39;2.js&#39;, step2);
+  }
+}
+
+function step2(error, script) {
+  if (error) {
+    handleError(error);
+  } else {
+    // console.log(a2);
+    loadScript(&#39;3.js&#39;, step3);
+  }
+}
+
+function step3(error, script) {
+  if (error) {
+    handleError(error);
+  } else {
+    // ...加载完所有脚本后继续 (*)
+    console.log(a1);
+    console.log(a2);
+    console.log(a3);
+  }
+};
+</pre>
+
+<h2>版本2：promise链</h2>
+<pre>
+function loadScript(src) {
+  return new Promise(function(resolve, reject) {
+    let script = document.createElement(&#39;script&#39;);
+    script.src = src;
+
+    script.onload = () =&gt; resolve(script);
+    script.onerror = () =&gt; reject(new Error(`Script load error for ${src}`));
+
+    document.head.append(script);
+  });
+}<br>
+</pre>
+
+<p>调用</p>
+<pre>
+function step1(){
+  console.log(a1);
+}
+function step2(){
+  console.log(a2);
+}
+function step3(){
+  console.log(a3);
+}
+loadScript(&quot;1.js&quot;)
+  .then(script =&gt; loadScript(&quot;2.js&quot;))
+  .then(script =&gt; loadScript(&quot;3.js&quot;))
+  .then(script =&gt; {
+    // 脚本加载完成，我们可以在这儿使用脚本中声明的函数
+    step1();
+    step2();
+    step3();
+  });<br>
+</pre>
+
+<h2><span style="color: inherit; font-family: inherit;">版本3：async/await</span>
+<br></h2>
+<pre>
+function loadScript(src) {
+  return new Promise(function(resolve, reject) {
+    let script = document.createElement(&#39;script&#39;);
+    script.src = src;
+
+    script.onload = () =&gt; resolve(script);
+    script.onerror = () =&gt; reject(new Error(`Script load error for ${src}`));
+
+    document.head.append(script);
+  });
+}<br>
+</pre>
+
+<p>调用</p>
+<pre>
+function step1(){
+  console.log(a1);
+}
+function step2(){
+  console.log(a2);
+}
+function step3(){
+  console.log(a3);
+}
+async function callLoadScript() {
+  try {
+    let r1 = await loadScript(&quot;1.js&quot;);
+    let r2 = await loadScript(&quot;2.js&quot;);
+    let r3 = await loadScript(&quot;3.js&quot;);
+    step1();
+    step2();
+    step3();
+  }catch(err){
+   alert(err)
+  }
+}
+callLoadScript();
+<br>
+</pre>
+</body>
+</html>
+
