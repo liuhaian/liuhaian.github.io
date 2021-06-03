@@ -36,6 +36,7 @@ var captureImage = function() {
             canvas.getContext('2d').drawImage(myVideo, 0, 0, canvas.width, canvas.height);
  
             var img = document.createElement("img");
+	    img.setAttribute("crossOrigin",'anonymous')
             img.src = canvas.toDataURL("image/png");
             output.appendChild(img);
 };
