@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+<meta charset="utf-8"> 
+<title>菜鸟教程(runoob.com)</title> 
+</head>
+<body> 
+
+<button onclick="playVid()" type="button">播放视频</button>
+<button onclick="pauseVid()" type="button">暂停视频</button> 
+<br> 
+<video id="video1">
+  <source src="mov_bbb.mp4" type="video/mp4">
+  <source src="mov_bbb.ogg" type="video/ogg">
+  您的浏览器不支持 HTML5 video  标签。
+</video>
+
+<div id="output"></div>
+<script> 
+var myVideo=document.getElementById("video1"); 
+var output;
+var scale = 0.8;
+
+output = document.getElementById("output");
+
+function playVid()
+{ 
+  myVideo.play();
+  myVideo.currentTime = 3;
+} 
+
+var captureImage = function() {
+            var canvas = document.createElement("canvas");
+            canvas.width = myVideo.videoWidth * scale;
+            canvas.height = myVideo.videoHeight * scale;
+            canvas.getContext('2d').drawImage(myVideo, 0, 0, canvas.width, canvas.height);
+ 
+            var img = document.createElement("img");
+            img.src = canvas.toDataURL("image/png");
+            output.appendChild(img);
+};
+
+
+	
+function pauseVid()
+{ 
+  myVideo.pause(); 
+  captureImage();
+} 
+</script> 
+
+<p>Video courtesy of <a href="//www.bigbuckbunny.org/" target="_blank">Big Buck Bunny</a>.</p>
+
+</body> 
+</html>
